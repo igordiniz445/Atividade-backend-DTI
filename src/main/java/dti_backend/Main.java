@@ -12,8 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author igorc
+ * @author Igor O. C. Diniz
  */
 public class Main {
 
@@ -23,32 +22,29 @@ public class Main {
     public static void main(String[] args) {
         
         String currentDir = new File("").getAbsoluteFile().toString()+"\\dados.txt";
-        System.out.println(currentDir);
+        //System.out.println(currentDir);
         File file = new File(currentDir); 
-        TransactionControl transactionControl = new TransactionControl();
-        UserControl userControl = new UserControl();
         try{
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line = br.readLine();
             while(line!= null){
-                Decode.decodeLine(line,transactionControl, userControl);
+                Decode.decodeLine(line);
                 line = br.readLine();
             }
-            
-            System.out.println("");
-            userControl.listBalance();
 
             System.out.println("");
-            transactionControl.runTransactions();
+            TransactionControl.runTransactions();
             
             System.out.println("");
-            userControl.listBalance();
+            UserControl.listBalance();
             
         }catch(FileNotFoundException e){
             System.out.println("Não foi possível encontrar o arquivo.");
         }catch(IOException ex) {
             System.out.println("Não foi possível ler o arquivo");
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }catch(Exception e){
+            System.out.println("Esception : "+e.getMessage());
         }
 
     }

@@ -1,20 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dti_backend.Models;
 
 import dti_backend.Control.UserControl;
 
 /**
- *
- * @author igorc
+ * @author Igor O. C. Diniz
  */
 public class Transaction {
     private User origin;
     private double value;
     private String date;
+    //date was suppost to be Date type, but was getting issues to convert it, with more time I would change it to Date type
     private String destinationId;
 
     public Transaction(User origin, double value, String date, String destination) {
@@ -40,6 +35,9 @@ public class Transaction {
         return this.date;
     }
     
+    /*
+    * Method to run a single transaction
+    */
     public boolean runTransaction(){
         User destination = UserControl.searchUser(this.destinationId);
         if(this.origin.withdraw(this.value)){

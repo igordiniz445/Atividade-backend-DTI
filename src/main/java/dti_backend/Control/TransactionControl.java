@@ -1,33 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dti_backend.Control;
 
 import dti_backend.Models.Transaction;
 import java.util.ArrayList;
 
 /**
- *
- * @author igorc
+ * @author Igor O. C. Diniz
+ * 
+ * A control class to store all Transactions.
+ * The class is abstract and all methods are static, so you don't need to instance this class to have access to Transactions
  */
-public class TransactionControl {
-    private final ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+public abstract class TransactionControl {
+    private static final ArrayList<Transaction> transactions = new ArrayList<Transaction>();
     
-    public void addTransaction(Transaction t){
-        this.transactions.add(t);
+    public static void addTransaction(Transaction t){
+        transactions.add(t);
     }
     
-    public ArrayList<Transaction> getTransactions(){
-        return this.transactions;
+    public static ArrayList<Transaction> getTransactions(){
+        return transactions;
     }
     
     /*
     *List all transactions in queue
     */
-    public void listTransactions(){
-        for(Transaction transaction : this.transactions){
+    public static void listTransactions(){
+        for(Transaction transaction : transactions){
             System.out.println(transaction.getOrigin().getName()+" transferiu R$ "
                     +transaction.getValue()+" para "
                     +UserControl.searchUser(transaction.getDestination()).getName()+"no dia "
@@ -35,18 +32,19 @@ public class TransactionControl {
         }
     }
     
-    
     /*
     *Run all transactions in queue
     */
-    public void runTransactions(){
-        for(Transaction transaction : this.transactions){
+    public static void runTransactions(){
+        for(Transaction transaction : transactions){
             if(transaction.runTransaction()){
+                //If was possible to run the transaction, the print the success
                 System.out.println(transaction.getOrigin().getName()+" transferiu R$ "
                     +transaction.getValue()+" para "
                     +UserControl.searchUser(transaction.getDestination()).getName()+"no dia "
                     +transaction.getDate());
             }else{
+                //If transaction fails, then print that wan't possible to run transaction
                 System.out.println(transaction.getOrigin().getName()+" nao pode transferir R$ "
                     +transaction.getValue()+" para "
                     +UserControl.searchUser(transaction.getDestination()).getName()+"no dia "
